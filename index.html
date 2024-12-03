@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base64 Image Encoder/Decoder By Sheshagiri</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom right, #ff9a9e, #fad0c4);
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            font-size: 2rem;
+            color: #5a5aa5;
+            margin-bottom: 20px;
+        }
+        .logo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 150px;
+            height: 150px;
+        }
+        .uploader {
+            margin: 20px 0;
+        }
+        input[type="file"] {
+            margin-bottom: 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #5a5aa5;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #7d78c6;
+        }
+        textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 20px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+        }
+        #preview {
+            margin-top: 20px;
+            max-width: 100%;
+        }
+        #preview img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <img src="Logo.png" alt="Logo" class="logo">
+    <div class="container">
+        <h1>Base64 Image Encoder/Decoder By Sheshagiri</h1>
+        <div class="uploader">
+            <input type="file" id="fileInput" accept="image/*">
+            <button id="encodeButton">Encode</button>
+        </div>
+        <textarea id="output" rows="10" placeholder="Base64 output will appear here..."></textarea>
+        <button id="decodeButton">Decode</button>
+        <div id="preview"></div>
+    </div>
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const encodeButton = document.getElementById('encodeButton');
+        const decodeButton = document.getElementById('decodeButton');
+        const output = document.getElementById('output');
+        const preview = document.getElementById('preview');
+
+        encodeButton.addEventListener('click', () => {
+            const file = fileInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    output.value = reader.result.split(',')[1];
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert('Please select an image first.');
+            }
+        });
+
+        decodeButton.addEventListener('click', () => {
+            const base64String = output.value;
+            if (base64String) {
+                preview.innerHTML = `<img src="data:image/png;base64,${base64String}" alt="Decoded Image">`;
+            } else {
+                alert('Please input a Base64 string to decode.');
+            }
+        });
+    </script>
+</body>
+</html>
